@@ -1,0 +1,18 @@
+.background {
+  background-color: #313338;
+  color: #f2f3f5;
+}
+
+.titlebar {
+  background-color: #1e1f22;
+  background-image: none;
+
+  border-top-color: #1e1f22;
+  border-bottom-color: #1e1f22;
+  border-right-color: #1e1f22;
+  border-left-color: #1e1f22;
+}
+
+button {
+  color: #f2f3f5;
+}
