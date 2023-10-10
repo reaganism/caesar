@@ -107,7 +107,7 @@ fn build_scrollable_area_ui() -> Box {
 
     let scrollable_area = Box::builder()
         .orientation(Orientation::Vertical)
-        .spacing(20)
+        .spacing(2)
         .build();
 
     for installable_box in installable_boxes {
@@ -120,7 +120,7 @@ fn build_scrollable_area_ui() -> Box {
 fn build_installation_ui(path: DiscordPath) -> Box {
     let button_box = Box::builder()
         .orientation(Orientation::Horizontal)
-        .spacing(10)
+        .spacing(4)
         .css_classes(vec!["button-box"])
         .build();
 
@@ -128,32 +128,52 @@ fn build_installation_ui(path: DiscordPath) -> Box {
         .label("Install")
         .css_classes(vec!["install-button"])
         .build();
-    install_button.set_halign(Align::End);
+    // install_button.set_halign(Align::End);
     button_box.append(&install_button);
 
     let uninstall_button = gtk::Button::builder()
         .label("Uninstall")
         .css_classes(vec!["uninstall-button"])
+        // .width_request(100)
         .build();
-    uninstall_button.set_halign(Align::End);
+    // uninstall_button.set_halign(Align::End);
     button_box.append(&uninstall_button);
 
     let installable_box = Box::builder()
-        .orientation(Orientation::Vertical)
+        .orientation(Orientation::Horizontal)
         .css_classes(vec!["installable-box"])
+        .width_request(-1)
+        .height_request(-1)
+        .build();
+
+    let name = match path.flavor {
+        DiscordFlavor::Stable => "Stable Install",
+        DiscordFlavor::Ptb => "PTB Install",
+        DiscordFlavor::Canary => "Canary Install",
+        DiscordFlavor::Dev => "Development Install",
+    };
+
+    let label_box = Box::builder()
+        .orientation(Orientation::Vertical)
+        .css_classes(vec!["label-box"])
+        .width_request(600)
         .build();
 
     let title_label = Label::builder()
-        .label(path.directory_path.file_name().unwrap().to_str().unwrap())
-        .css_classes(vec!["title-label"])
+        .label(name)
+        .css_classes(vec!["install-title-label"])
         .build();
 
     let description_label = Label::builder()
         .label(path.directory_path.to_str().unwrap())
+        .css_classes(vec!["install-description-label"])
         .build();
 
-    installable_box.append(&title_label);
-    installable_box.append(&description_label);
+    label_box.append(&title_label);
+    label_box.append(&description_label);
+    label_box.set_halign(Align::Fill);
+    button_box.set_halign(Align::End);
+    installable_box.append(&label_box);
     installable_box.append(&button_box);
 
     installable_box

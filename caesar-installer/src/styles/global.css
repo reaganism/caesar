@@ -55,3 +55,24 @@ button {
 .uninstall-button:active {
   background-color: #8f2022;
 }
+
+.install-title-label {
+  font-weight: bold;
+}
+
+.install-description-label {
+  font-style: italic;
+}
+
+.installable-box {
+  margin-left: 10px;
+  margin-right: 10px;
+  padding: 5px;
+  border-style: solid;
+  border-bottom-width: 1px;
+  border-top-width: 1px;
+  border-left-width: 1px;
+  border-right-width: 1px;
+  border-color: #1e1f22;
+  border-radius: 4px;
+}

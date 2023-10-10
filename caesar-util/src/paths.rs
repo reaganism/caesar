@@ -3,6 +3,7 @@ use std::path::PathBuf;
 // Paths and resolution logic based on:
 // https://github.com/replugged-org/replugged/blob/main/scripts/inject/platforms
 
+#[derive(Clone, Copy, Debug)]
 pub enum DiscordFlavor {
     Stable,
     Ptb,
@@ -50,6 +51,7 @@ impl DiscordPathResolver for DiscordFlavor {
         let asar_path = target_app_dir.join("resources").join("app.asar");
 
         vec![DiscordPath {
+            flavor: self.clone(),
             directory_path: target_app_dir,
             asar_path,
         }]
@@ -67,6 +69,7 @@ impl DiscordPathResolver for DiscordFlavor {
 }
 
 pub struct DiscordPath {
+    pub flavor: DiscordFlavor,
     pub directory_path: PathBuf,
     pub asar_path: PathBuf,
 }
