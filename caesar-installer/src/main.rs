@@ -51,7 +51,7 @@ fn build_ui(app: &Application) {
     main_box.append(&title_label);
 
     let description_label = Label::builder()
-        .label("This is the installer for caesar, a reimplementation of the Discord desktop bootstrapper, focusing on performance and stability.")
+        .label("This is the installer for caesar, a reimplementation of the Discord desktop bootstrapper focusing on performance and stability.")
         .build();
     main_box.append(&description_label);
 
