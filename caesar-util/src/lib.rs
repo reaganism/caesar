@@ -1,1 +1,1 @@
-mod paths;
+pub mod paths;

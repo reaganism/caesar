@@ -16,3 +16,42 @@
 button {
   color: #f2f3f5;
 }
+
+.title-label {
+  font-size: 36px;
+  font-weight: bold;
+}
+
+.install-button {
+  background-color: #5865f2;
+  background-image: none;
+  border-bottom-width: 0px;
+  border-top-width: 0px;
+  border-left-width: 0px;
+  border-right-width: 0px;
+}
+
+.install-button:hover {
+  background-color: #4752c4;
+}
+
+.install-button:active {
+  background-color: #3c45a5;
+}
+
+.uninstall-button {
+  background-color: #da373c;
+  background-image: none;
+  border-bottom-width: 0px;
+  border-top-width: 0px;
+  border-left-width: 0px;
+  border-right-width: 0px;
+}
+
+.uninstall-button:hover {
+  background-color: #a12828;
+}
+
+.uninstall-button:active {
+  background-color: #8f2022;
+}

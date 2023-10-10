@@ -27,8 +27,11 @@ impl DiscordPathResolver for DiscordFlavor {
         let discord_dir = PathBuf::from(local_app_data).join(folder);
 
         // TODO: Maybe return all of these potential paths?
-        let target_app_dir = discord_dir
-            .read_dir()
+        let target_app_dir = discord_dir.read_dir();
+        if target_app_dir.is_err() {
+            return vec![];
+        }
+        let target_app_dir = target_app_dir
             .unwrap()
             .map(|entry| entry.unwrap().path())
             .filter(|path| path.is_dir())
