@@ -75,9 +75,10 @@ fn build_selection_area_ui() -> Box {
     let area = Box::builder().orientation(Orientation::Vertical).build();
 
     let scrollable_window = ScrolledWindow::builder()
-        .hscrollbar_policy(gtk::PolicyType::Automatic)
-        .vscrollbar_policy(gtk::PolicyType::Never)
+        .hscrollbar_policy(gtk::PolicyType::Never)
+        .vscrollbar_policy(gtk::PolicyType::Automatic)
         .child(&build_scrollable_area_ui())
+        .height_request(460)
         .build();
 
     scrollable_window.set_halign(Align::Fill);
@@ -143,7 +144,6 @@ fn build_installation_ui(path: DiscordPath) -> Box {
         .orientation(Orientation::Horizontal)
         .css_classes(vec!["installable-box"])
         .width_request(-1)
-        .height_request(-1)
         .build();
 
     let name = match path.flavor {
