@@ -8,7 +8,7 @@ caesar is a free and open-source, stability- and performance-oriented reimplemen
 
 ## The Why
 
-Discord's official bootstrapper is slow, bloated, and unhackable. caesar aims to fix this. Alternatives exist, such as [GooseMod](https://github.com/GooseMod/OpenAsar) and my own personal (and now unmaintained) fork [steviegt6/nucleus](https://github.com/steviegt6/nucleus).
+Discord's official bootstrapper is slow, bloated, and unhackable. caesar aims to fix this. Alternatives exist, such as [GooseMod](https://github.com/GooseMod/OpenAsar) and my own personal (and now unmaintained) fork [steviegt6/nucleus](https://github.com/steviegt6/nucleus), but they are unsatisfactory.
 
 The two main reasons to create an alternative to OpenAsar instead of forking it and potentially contributing back are 1) OpenAsar reuses large swaths of proprietary code and 2) the project scopes are simply different; OpenAsar aims to reimplement the main bootstrapper while caesar has its eyes further set on reimplementing modules used by the bootstrapper.
 
