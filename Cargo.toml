@@ -1,0 +1,3 @@
+[workspace]
+members = ["caesar-util", "caesar-installer"]
+resolver = "2"

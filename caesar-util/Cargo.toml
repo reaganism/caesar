@@ -1,0 +1,11 @@
+[package]
+name = "caesar-util"
+version = "1.0.0"
+edition = "2021"
+authors = ["tomat"]
+description = "utilities used by caesar projects"
+
+[lib]
+crate-type = ["lib"]
+
+[dependencies]

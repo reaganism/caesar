@@ -1,0 +1,10 @@
+[package]
+name = "caesar-installer"
+version = "1.0.0"
+edition = "2021"
+authors = ["tomat"]
+description = "installer for caesar"
+
+[dependencies]
+caesar-util = { path = "../caesar-util" }
+gtk = { version = "0.7.3", package = "gtk4", features = ["v4_10"] }
