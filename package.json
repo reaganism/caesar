@@ -1,0 +1,25 @@
+{
+    "name": "workspace",
+    "version": "1.0.0",
+    "description": "workspace",
+    "private": true,
+    "scripts": {
+        "dev": "cd caesar-build && cargo run"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/steviegt6/caesar.git"
+    },
+    "author": "tomat",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/steviegt6/caesar/issues"
+    },
+    "homepage": "https://github.com/steviegt6/caesar#readme",
+    "devDependencies": {
+        "@electron/asar": "^3.2.7",
+        "eslint": "^8.51.0",
+        "prettier-eslint": "^15.0.1",
+        "typescript": "^5.2.2"
+    }
+}

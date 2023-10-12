@@ -1,4 +1,4 @@
-use std::path::PathBuf;
+use std::{fmt::Display, path::PathBuf};
 
 // Paths and resolution logic based on:
 // https://github.com/replugged-org/replugged/blob/main/scripts/inject/platforms
@@ -68,10 +68,28 @@ impl DiscordPathResolver for DiscordFlavor {
     }
 }
 
+impl Display for DiscordFlavor {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            DiscordFlavor::Stable => write!(f, "Discord Stable"),
+            DiscordFlavor::Ptb => write!(f, "Discord PTB"),
+            DiscordFlavor::Canary => write!(f, "Discord Canary"),
+            DiscordFlavor::Dev => write!(f, "Discord Dev"),
+        }
+    }
+}
+
+#[derive(Clone, Debug)]
 pub struct DiscordPath {
     pub flavor: DiscordFlavor,
     pub directory_path: PathBuf,
     pub asar_path: PathBuf,
+}
+
+impl Display for DiscordPath {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{} ({})", self.flavor, self.directory_path.display())
+    }
 }
 
 pub fn resolve_discord_paths(flavor: DiscordFlavor) -> Vec<DiscordPath> {

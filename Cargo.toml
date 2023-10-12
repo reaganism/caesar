@@ -1,3 +1,3 @@
 [workspace]
-members = ["caesar-util", "caesar-installer"]
+members = ["caesar-util", "caesar-installer", "caesar-build"]
 resolver = "2"
