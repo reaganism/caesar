@@ -93,7 +93,31 @@ fn run_pack(_path: &DiscordPath) {
     }
 }
 
-fn run_run(path: &DiscordPath) {}
+#[cfg(target_os = "windows")]
+fn run_run(path: &DiscordPath) {
+    let files = std::fs::read_dir(path.directory_path.clone()).unwrap();
+    let exe = files
+        .filter_map(|entry| {
+            let entry = entry.unwrap();
+            let path = entry.path();
+            if path.is_file() {
+                let file_name = path.file_name().unwrap().to_str().unwrap();
+                if file_name.ends_with(".exe") {
+                    return Some(path);
+                }
+            }
+            None
+        })
+        .next()
+        .unwrap();
+
+    println!("Running Discord...");
+    let status = Command::new(exe).status().unwrap();
+
+    if !status.success() {
+        panic!("Failed to run Discord");
+    }
+}
 
 fn npx() -> Command {
     #[cfg(target_os = "windows")]
