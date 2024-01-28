@@ -1,5 +1,5 @@
-import { Timer, log, time, timeEnd } from "./util/logging";
+import { Timer, log, timerStart, timerEnd } from "./util/logging";
 
-time(Timer.Initialization);
+timerStart(Timer.Initialization);
 log("test", "test");
-timeEnd(Timer.Initialization);
+timerEnd(Timer.Initialization);
