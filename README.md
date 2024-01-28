@@ -12,7 +12,7 @@ Caesar will be distributed both as a packed ASAR archive to be used with an exis
 
 Discord's official bootstrapper is slow, bloated, and unhackable. Caesar aims to fix this. Alternatives exist, such as [GooseMod](https://github.com/GooseMod/OpenAsar) and my own personal (and now unmaintained) fork [steviegt6/nucleus](https://github.com/steviegt6/nucleus), but they are unsatisfactory.
 
-The two main reasons to create an alternative to OpenAsar instead of forking it and potentially contributing back are 1) OpenAsar reuses large swaths of proprietary code and 2) the project scopes are simply different; OpenAsar aims to reimplement the main bootstrapper while caesar has its eyes further set on reimplementing modules used by the bootstrapper.
+The two main reasons to create an alternative to OpenAsar instead of forking it and potentially contributing back are 1) OpenAsar reuses large swaths of proprietary code and 2) the project scopes are simply different; OpenAsar aims to reimplement the main bootstrapper while Caesar has its eyes further set on reimplementing modules used by the bootstrapper.
 
 Caesar also intends to provide first-class support for many client modifications, with compatibility as a focus.
 
@@ -22,7 +22,7 @@ skillz
 
 ...and also:
 
--   [GooseMod](https://github.com/GooseMod/OpenAsar),
+-   [GooseMod/OpenAsar](https://github.com/GooseMod/OpenAsar),
 -   [steviegt6/nucleus](https://github.com/steviegt6/nucleus),
 -   [OpenAsar/discord-desktop-datamining](https://github.com/OpenAsar/discord-desktop-datamining),
 -   and more.
