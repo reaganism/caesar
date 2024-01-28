@@ -31,7 +31,7 @@ export function timerEnd(timer: Timer): void {
 }
 
 function fullTimerName(timer: Timer): string {
-    return `[\x1b[38;2;88;101;242mcaesar\x1b[0m > ${timerName(timer)} (Timer)]`;
+    return `[\x1b[38;2;88;101;242mcaesar\x1b[0m > timer > ${timerName(timer)}]`;
 }
 
 function timerName(timer: Timer): string {
