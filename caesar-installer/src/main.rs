@@ -45,13 +45,13 @@ fn build_ui(app: &Application) {
         .build();
 
     let title_label = Label::builder()
-        .label("caesar Installer")
+        .label("Caesar Installer")
         .css_classes(vec!["title-label"])
         .build();
     main_box.append(&title_label);
 
     let description_label = Label::builder()
-        .label("This is the installer for caesar, a reimplementation of the Discord desktop bootstrapper focusing on performance and stability.")
+        .label("This is the installer for Caesar, a reimplementation of the Discord desktop bootstrapper focusing on performance and stability.")
         .build();
     main_box.append(&description_label);
 
@@ -61,7 +61,7 @@ fn build_ui(app: &Application) {
 
     let window = ApplicationWindow::builder()
         .application(app)
-        .title("caesar Installer")
+        .title("Caesar Installer")
         .default_width(800)
         .default_height(600)
         .resizable(false)
