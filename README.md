@@ -33,7 +33,7 @@ TODO, there is a GTK installer in the works for easy end-user installations. Doc
 
 ## Licensing
 
-As much as I would have loved to license this under GNU-something-or-other, I can't do that (at least not in good faith). While the code written is my own, there is plenty of _inspiration_ taken elsewhere, even from the proprietary bootstrapper, ergo licensing under MIT is easiest.
+Caesar is currently licensed under the GNU Affero General Public License v3.0. I would like to keep it this way, though it may be subject to change.
 
 [^1]: Not all core modules will be reimplemented. Effort is required to reverse-engineer native modules.
 [^2]: The most notable example of this is [GooseMod/OpenAsar](https://github.com/GooseMod/OpenAsar).
