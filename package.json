@@ -4,7 +4,18 @@
     "description": "workspace",
     "private": true,
     "scripts": {
-        "dev": "cd caesar-build && cargo run"
+        "dev:discord:stable": "cd caesar-build && cargo run -- --flavor 0 --task 0",
+        "dev:discord:ptb": "cd caesar-build && cargo run -- --flavor 1 --task 0",
+        "dev:discord:canary": "cd caesar-build && cargo run -- --flavor 2 --task 0",
+        "dev:discord:dev": "cd caesar-build && cargo run -- --flavor 3 --task 0",
+        "package:caesar:stable": "npm run dev:discord:stable && cd caesar && npm run package",
+        "package:caesar:ptb": "npm run dev:discord:ptb && cd caesar && npm run package",
+        "package:caesar:canary": "npm run dev:discord:canary && cd caesar && npm run package",
+        "package:caesar:dev": "npm run dev:discord:dev && cd caesar && npm run package",
+        "start:caesar:stable": "npm run dev:discord:stable && cd caesar && npm run start",
+        "start:caesar:ptb": "npm run dev:discord:ptb && cd caesar && npm run start",
+        "start:caesar:canary": "npm run dev:discord:canary && cd caesar && npm run start",
+        "start:caesar:dev": "npm run dev:discord:dev && cd caesar && npm run start"
     },
     "repository": {
         "type": "git",

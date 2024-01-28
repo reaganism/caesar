@@ -21,11 +21,21 @@ fn main() {
 
     let tasks = vec![Task::Build, Task::Copy, Task::Dev, Task::Pack, Task::Run];
 
-    let flavor_selection = Select::new()
-        .with_prompt("Select Discord flavor")
-        .items(&flavors)
-        .interact()
-        .unwrap();
+    let args: Vec<String> = std::env::args().collect();
+
+    let mut flavor_selection = args
+        .iter()
+        .position(|arg| arg == "--flavor")
+        .map(|index| args[index + 1].parse::<usize>().unwrap_or(0))
+        .unwrap_or(usize::MAX);
+
+    if flavor_selection >= flavors.len() {
+        flavor_selection = Select::new()
+            .with_prompt("Select Discord flavor")
+            .items(&flavors)
+            .interact()
+            .unwrap();
+    }
 
     let flavor = flavors[flavor_selection];
     let paths = resolve_discord_paths(flavor);
@@ -47,11 +57,20 @@ fn main() {
         }
     };
 
-    let task_selection = Select::new()
-        .with_prompt("Select task")
-        .items(&tasks)
-        .interact()
-        .unwrap();
+    let mut task_selection = args
+        .iter()
+        .position(|arg| arg == "--task")
+        .map(|index| args[index + 1].parse::<usize>().unwrap_or(0))
+        .unwrap_or(usize::MAX);
+
+    if task_selection >= tasks.len() {
+        task_selection = Select::new()
+            .with_prompt("Select task")
+            .items(&tasks)
+            .interact()
+            .unwrap();
+    }
+
     let task = &tasks[task_selection];
 
     println!("Running task: {}", task.name());
