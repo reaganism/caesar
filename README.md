@@ -29,7 +29,23 @@ skillz
 
 ## Installation
 
-TODO, there is a GTK installer in the works for easy end-user installations. Documentation for building from source is also TODO.
+### Integrate with an existing Discord installation
+
+Caesar distributes raw `.asar` files to be dropped into an existing Discord installation. This process may be automated by the GTK installer.
+
+### Install as a Standalone Installation
+
+Caesar is also distributed as a standalone Electron application that does not require a preexisting Discord installation. Various installers and portable releases are provided.
+
+## Building
+
+Caesar uses a mixture of TypeScript and Rust for various tools. The GTK installer and build scripts are written in Rust, and Caesar (the bootstrapper) is written in TypeScript.
+
+Rust, Node, and npm are all expected to be installed on your system. I have not tested with any package manager other than npm because I don't care.
+
+Gtk4 and various other libraries should be installed; this is easy on Linux, but annoying on Windows. A `rust-toolchain` file whose contents are just `stable-x86_64-pc-windows-gnu` has been provided, but changing the toolchain manually may be required.
+
+You can build releases with `npm run package:caesar:<your discord flavor>`. Development can be done with `npm run start:caesar:<your discord flavor>`.
 
 ## Licensing
 
