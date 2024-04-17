@@ -1,0 +1,4 @@
+# Specifying this channel is required for building on Windows.
+
+[toolchain]
+channel = "stable-x86_64-pc-windows-gnu"

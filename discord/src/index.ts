@@ -23,10 +23,10 @@ import { getBuildInfo, initBuildInfo } from './util/build-info';
 import { initializePaths } from './util/paths';
 
 timerStart(Timer.Initialization);
+{
+    initBuildInfo();
+    log('init', 'Got buildInfo:', getBuildInfo());
 
-initBuildInfo();
-log('init', 'Got buildInfo:', getBuildInfo());
-
-initializePaths(getBuildInfo());
-
+    initializePaths(getBuildInfo());
+}
 timerEnd(Timer.Initialization);
