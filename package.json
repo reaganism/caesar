@@ -1,38 +1,40 @@
 {
-    "name": "workspace",
-    "version": "1.0.0",
-    "description": "workspace",
-    "private": true,
-    "scripts": {
-        "dev:discord:stable": "cd caesar-build && cargo run -- --flavor 0 --task 0",
-        "dev:discord:ptb": "cd caesar-build && cargo run -- --flavor 1 --task 0",
-        "dev:discord:canary": "cd caesar-build && cargo run -- --flavor 2 --task 0",
-        "dev:discord:dev": "cd caesar-build && cargo run -- --flavor 3 --task 0",
-        "package:caesar:stable": "npm run dev:discord:stable && cd caesar && npm run package",
-        "package:caesar:ptb": "npm run dev:discord:ptb && cd caesar && npm run package",
-        "package:caesar:canary": "npm run dev:discord:canary && cd caesar && npm run package",
-        "package:caesar:dev": "npm run dev:discord:dev && cd caesar && npm run package",
-        "start:caesar:stable": "npm run dev:discord:stable && cd caesar && npm run start",
-        "start:caesar:ptb": "npm run dev:discord:ptb && cd caesar && npm run start",
-        "start:caesar:canary": "npm run dev:discord:canary && cd caesar && npm run start",
-        "start:caesar:dev": "npm run dev:discord:dev && cd caesar && npm run start"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/steviegt6/caesar.git"
-    },
-    "author": "tomat",
-    "license": "AGPL-3.0",
-    "bugs": {
-        "url": "https://github.com/steviegt6/caesar/issues"
-    },
-    "homepage": "https://github.com/steviegt6/caesar#readme",
-    "devDependencies": {
-        "@electron/asar": "^3.2.7",
-        "@types/node": "^20.8.4",
-        "electron": "^22.3.12",
-        "eslint": "^8.51.0",
-        "prettier-eslint": "^15.0.1",
-        "typescript": "^5.2.2"
-    }
+  "name": "workspace",
+  "version": "1.0.0",
+  "private": true,
+  "description": "workspace",
+  "homepage": "https://github.com/steviegt6/caesar#readme",
+  "bugs": {
+    "url": "https://github.com/steviegt6/caesar/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/steviegt6/caesar.git"
+  },
+  "license": "AGPL-3.0",
+  "author": "tomat",
+  "scripts": {
+    "dev:discord:canary": "cd caesar-build && cargo run -- --flavor 2 --task 0",
+    "dev:discord:dev": "cd caesar-build && cargo run -- --flavor 3 --task 0",
+    "dev:discord:ptb": "cd caesar-build && cargo run -- --flavor 1 --task 0",
+    "dev:discord:stable": "cd caesar-build && cargo run -- --flavor 0 --task 0",
+    "package:caesar:canary": "npm run dev:discord:canary && cd caesar && npm run package",
+    "package:caesar:dev": "npm run dev:discord:dev && cd caesar && npm run package",
+    "package:caesar:ptb": "npm run dev:discord:ptb && cd caesar && npm run package",
+    "package:caesar:stable": "npm run dev:discord:stable && cd caesar && npm run package",
+    "start:caesar:canary": "npm run dev:discord:canary && cd caesar && npm run start",
+    "start:caesar:dev": "npm run dev:discord:dev && cd caesar && npm run start",
+    "start:caesar:ptb": "npm run dev:discord:ptb && cd caesar && npm run start",
+    "start:caesar:stable": "npm run dev:discord:stable && cd caesar && npm run start"
+  },
+  "prettier": "@vercel/style-guide/prettier",
+  "devDependencies": {
+    "@electron/asar": "^3.2.7",
+    "@types/node": "^20.8.4",
+    "@vercel/style-guide": "^6.0.0",
+    "electron": "^22.3.12",
+    "eslint": "^8.51.0",
+    "prettier-eslint": "^15.0.1",
+    "typescript": "^5.2.2"
+  }
 }

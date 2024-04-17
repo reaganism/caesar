@@ -6,7 +6,7 @@ Caesar is an open-source project reimplementing Discord's desktop bootstrapper a
 
 Caesar is a free and open-source, stability- and performance-oriented reimplementation of the Discord desktop bootstrapper application. This is commonly referred to as the `app.asar` file[^2].
 
-Caesar will be distributed both as a packed ASAR archive to be used with an existing Discord installation and also as a standalone application.
+Caesar is distributed both as a packed ASAR archive to be used with an existing Discord installation and also as a standalone application.
 
 ## The Why
 
@@ -22,16 +22,18 @@ skillz
 
 ...and also:
 
--   [GooseMod/OpenAsar](https://github.com/GooseMod/OpenAsar),
--   [steviegt6/nucleus](https://github.com/steviegt6/nucleus),
--   [OpenAsar/discord-desktop-datamining](https://github.com/OpenAsar/discord-desktop-datamining),
--   and more.
+- [GooseMod/OpenAsar](https://github.com/GooseMod/OpenAsar),
+- [steviegt6/nucleus](https://github.com/steviegt6/nucleus),
+- [OpenAsar/discord-desktop-datamining](https://github.com/OpenAsar/discord-desktop-datamining),
+- and more.
 
 ## Installation
 
 ### Integrate with an existing Discord installation
 
 Caesar distributes raw `.asar` files to be dropped into an existing Discord installation. This process may be automated by the GTK installer.
+
+If you wish to do it manually, find your install's `app.asar` file (you can do it, I believe in you) and copy it elsewhere, then replace it with Caesar's `app.asar` file.
 
 ### Install as a Standalone Installation
 
@@ -49,7 +51,7 @@ You can build releases with `npm run package:caesar:<your discord flavor>`. Deve
 
 ## Licensing
 
-Caesar is currently licensed under the GNU Affero General Public License v3.0. I would like to keep it this way, though it may be subject to change.
+Caesar is currently licensed under the GNU Affero General Public License, version 3.
 
 [^1]: Not all core modules will be reimplemented. Effort is required to reverse-engineer native modules.
 [^2]: The most notable example of this is [GooseMod/OpenAsar](https://github.com/GooseMod/OpenAsar).

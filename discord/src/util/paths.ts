@@ -1,8 +1,8 @@
-import { basename, dirname, join } from "path";
-import buildInfo, { BuildInfo } from "./buildInfo";
-import { log } from "./logging";
-import { app } from "electron";
-import { lstatSync, mkdirSync, readdirSync, rmdirSync } from "fs";
+import { basename, dirname, join } from 'node:path';
+import { lstatSync, mkdirSync, readdirSync, rmdirSync } from 'node:fs';
+import { app } from 'electron';
+import { type CaesarBuildInfo } from './build-info';
+import { log } from './logging';
 
 let resourcesPath: string | undefined;
 let userDataPath: string | undefined;
@@ -10,101 +10,111 @@ let versionedUserDataPath: string | undefined;
 let moduleDataPath: string | undefined;
 let installPath: string | undefined;
 
-export function initialize(buildInfo: BuildInfo) {
-    resourcesPath = join(require.main.filename, "..", "..", "..");
-    userDataPath = findUserDataDir(findAppDataDir(), buildInfo);
-    versionedUserDataPath = join(userDataPath, buildInfo.version);
-    moduleDataPath =
-        buildInfo.localModulesRoot || buildInfo.newUpdater
-            ? join(userDataPath, "module_data")
-            : join(versionedUserDataPath, "modules");
+export function initializePaths(buildInfo: CaesarBuildInfo): void {
+  if (!require.main)
+    throw new Error('Cannot initialize paths without a main module');
 
-    const exeDir = dirname(app.getPath("exe"));
-    if (/^app-[0-9]+\.[0-9]+\.[0-9]+/.test(basename(exeDir))) {
-        installPath = join(exeDir, "resources");
-    }
+  resourcesPath = join(require.main.filename, '..', '..', '..');
+  userDataPath = findUserDataDir(findAppDataDir(), buildInfo);
+  versionedUserDataPath = join(userDataPath, buildInfo.version);
+  moduleDataPath =
+    buildInfo.localModulesRoot ?? buildInfo.newUpdater
+      ? join(userDataPath, 'module_data')
+      : join(versionedUserDataPath, 'modules');
 
-    app.setPath("userData", userDataPath);
-    mkdirSync(userDataPath, { recursive: true });
+  const exeDir = dirname(app.getPath('exe'));
+  if (/^app-[0-9]+\.[0-9]+\.[0-9]+/.test(basename(exeDir))) {
+    installPath = join(exeDir, 'resources');
+  }
 
-    log("paths", "resourcesPath:", resourcesPath);
-    log("paths", "userDataPath:", userDataPath);
-    log("paths", "userDataVersionedPath:", versionedUserDataPath);
-    log("paths", "moduleDataPath:", moduleDataPath);
-    log("paths", "installPath:", installPath);
+  app.setPath('userData', userDataPath);
+  mkdirSync(userDataPath, { recursive: true });
+
+  log('paths', 'resourcesPath:', resourcesPath);
+  log('paths', 'userDataPath:', userDataPath);
+  log('paths', 'userDataVersionedPath:', versionedUserDataPath);
+  log('paths', 'moduleDataPath:', moduleDataPath);
+  log('paths', 'installPath:', installPath);
 }
 
-export function removeOldInstallations() {
+export function removeOldInstallations(buildInfo: CaesarBuildInfo): void {
+  if (!userDataPath) {
+    log('paths', 'userDataPath not set, cannot remove old installations');
+    return;
+  }
+
+  log('paths', 'Removing old installations');
+
+  const entries = readdirSync(userDataPath);
+  entries.forEach((entry) => {
     if (!userDataPath) {
-        log("paths", "userDataPath not set, cannot remove old installations");
-        return;
+      return;
     }
 
-    log("paths", "Removing old installations");
+    const fullPath = join(userDataPath, entry);
+    try {
+      const stat = lstatSync(fullPath);
 
-    const entries = readdirSync(userDataPath);
-    entries.forEach((entry) => {
-        const fullPath = join(userDataPath, entry);
-        try {
-            const stat = lstatSync(fullPath);
+      if (!stat.isDirectory()) {
+        return;
+      }
 
-            if (!stat.isDirectory()) {
-                return;
-            }
+      if (entry.includes(buildInfo.version)) {
+        return;
+      }
 
-            if (entry.indexOf(buildInfo.version) !== -1) {
-                return;
-            }
+      if (!/^[0-9]+.[0-9]+.[0-9]+/.exec(entry)) {
+        return;
+      }
 
-            if (!entry.match("^[0-9]+.[0-9]+.[0-9]+")) {
-                return;
-            }
+      log('paths', 'Found old installation, removing', fullPath);
 
-            log("paths", "Found old installation, removing", fullPath);
-
-            rmdirSync(fullPath, { recursive: true });
-        } catch (e) {
-            log("paths", "Failed to remove old installation", fullPath, e);
-            return;
-        }
-    });
+      rmdirSync(fullPath, { recursive: true });
+    } catch (e) {
+      log('paths', 'Failed to remove old installation', fullPath, e);
+      return;
+    }
+  });
 }
 
-export function getInstallPath() {
-    return installPath;
+export function getInstallPath(): string | undefined {
+  return installPath;
 }
 
-export function getModuleDataPath() {
-    return moduleDataPath;
+export function getModuleDataPath(): string | undefined {
+  return moduleDataPath;
 }
 
-export function getResourcesPath() {
-    return resourcesPath;
+export function getResourcesPath(): string | undefined {
+  return resourcesPath;
 }
 
-export function getUserDataPath() {
-    return userDataPath;
+export function getUserDataPath(): string | undefined {
+  return userDataPath;
 }
 
-export function getVersionedUserDataPath() {
-    return versionedUserDataPath;
+export function getVersionedUserDataPath(): string | undefined {
+  return versionedUserDataPath;
 }
 
 function findAppDataDir(): string {
-    const userDataPath = process.env.DISCORD_USER_DATA_DIR;
-    if (userDataPath) {
-        return userDataPath;
-    }
+  userDataPath = process.env.DISCORD_USER_DATA_DIR;
+  if (userDataPath) {
+    return userDataPath;
+  }
 
-    return app.getPath("appData");
+  return app.getPath('appData');
 }
 
-function findUserDataDir(userDataRoot: string, buildInfo: BuildInfo): string {
-    // TODO: Determine when to use caesar instead of discord?
-    return join(
-        userDataRoot,
-        "discord" + buildInfo.releaseChannel === "stable"
-            ? ""
-            : buildInfo.releaseChannel,
-    );
+function findUserDataDir(
+  userDataRoot: string,
+  buildInfo: CaesarBuildInfo,
+): string {
+  // TODO: Determine when to use caesar instead of discord?
+  return join(
+    userDataRoot,
+    `discord${buildInfo.releaseChannel}` === 'stable'
+      ? ''
+      : buildInfo.releaseChannel,
+  );
 }

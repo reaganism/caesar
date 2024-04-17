@@ -1,78 +1,93 @@
+/* Copyright (C) 2024  Tomat et al.
+ *
+ * This program is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU Affero General Public License as published by the
+ * Free Software Foundation, either version 3 of the License, or (at your
+ * option) any later versions.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses>.
+ */
+
 .background {
-  background-color: #313338;
-  color: #f2f3f5;
+    background-color: #313338;
+    color: #f2f3f5;
 }
 
 .titlebar {
-  background-color: #1e1f22;
-  background-image: none;
+    background-color: #1e1f22;
+    background-image: none;
 
-  border-top-color: #1e1f22;
-  border-bottom-color: #1e1f22;
-  border-right-color: #1e1f22;
-  border-left-color: #1e1f22;
+    border-top-color: #1e1f22;
+    border-bottom-color: #1e1f22;
+    border-right-color: #1e1f22;
+    border-left-color: #1e1f22;
 }
 
 button {
-  color: #f2f3f5;
+    color: #f2f3f5;
 }
 
 .title-label {
-  font-size: 36px;
-  font-weight: bold;
+    font-size: 36px;
+    font-weight: bold;
 }
 
 .install-button {
-  background-color: #5865f2;
-  background-image: none;
-  border-bottom-width: 0px;
-  border-top-width: 0px;
-  border-left-width: 0px;
-  border-right-width: 0px;
+    background-color: #5865f2;
+    background-image: none;
+    border-bottom-width: 0px;
+    border-top-width: 0px;
+    border-left-width: 0px;
+    border-right-width: 0px;
 }
 
 .install-button:hover {
-  background-color: #4752c4;
+    background-color: #4752c4;
 }
 
 .install-button:active {
-  background-color: #3c45a5;
+    background-color: #3c45a5;
 }
 
 .uninstall-button {
-  background-color: #da373c;
-  background-image: none;
-  border-bottom-width: 0px;
-  border-top-width: 0px;
-  border-left-width: 0px;
-  border-right-width: 0px;
+    background-color: #da373c;
+    background-image: none;
+    border-bottom-width: 0px;
+    border-top-width: 0px;
+    border-left-width: 0px;
+    border-right-width: 0px;
 }
 
 .uninstall-button:hover {
-  background-color: #a12828;
+    background-color: #a12828;
 }
 
 .uninstall-button:active {
-  background-color: #8f2022;
+    background-color: #8f2022;
 }
 
 .install-title-label {
-  font-weight: bold;
+    font-weight: bold;
 }
 
 .install-description-label {
-  font-style: italic;
+    font-style: italic;
 }
 
 .installable-box {
-  margin-left: 10px;
-  margin-right: 10px;
-  padding: 5px;
-  border-style: solid;
-  border-bottom-width: 1px;
-  border-top-width: 1px;
-  border-left-width: 1px;
-  border-right-width: 1px;
-  border-color: #1e1f22;
-  border-radius: 4px;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 5px;
+    border-style: solid;
+    border-bottom-width: 1px;
+    border-top-width: 1px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-color: #1e1f22;
+    border-radius: 4px;
 }

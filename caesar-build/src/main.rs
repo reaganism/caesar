@@ -1,3 +1,18 @@
+/* Copyright (C) 2024  Tomat et al.
+ *
+ * This program is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU Affero General Public License as published by the
+ * Free Software Foundation, either version 3 of the License, or (at your
+ * option) any later versions.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses>.
+ */
+
 use caesar_util::paths::{resolve_discord_paths, DiscordFlavor};
 use dialoguer::Select;
 
@@ -5,23 +20,24 @@ use crate::tasks::{Task, TaskInfo};
 
 mod tasks;
 
+const FLAVORS: [DiscordFlavor; 4] = [
+    DiscordFlavor::Stable,
+    DiscordFlavor::Ptb,
+    DiscordFlavor::Canary,
+    DiscordFlavor::Dev,
+];
+
+const TASKS: [Task; 5] = [Task::Build, Task::Copy, Task::Dev, Task::Pack, Task::Run];
+
 fn main() {
+    let args: Vec<String> = std::env::args().collect();
+
+    // Move into the root of the repository.
     std::env::set_current_dir("..").unwrap();
     println!(
         "Using working directory: {:?}",
         std::env::current_dir().unwrap()
     );
-
-    let flavors = vec![
-        DiscordFlavor::Stable,
-        DiscordFlavor::Ptb,
-        DiscordFlavor::Canary,
-        DiscordFlavor::Dev,
-    ];
-
-    let tasks = vec![Task::Build, Task::Copy, Task::Dev, Task::Pack, Task::Run];
-
-    let args: Vec<String> = std::env::args().collect();
 
     let mut flavor_selection = args
         .iter()
@@ -29,15 +45,19 @@ fn main() {
         .map(|index| args[index + 1].parse::<usize>().unwrap_or(0))
         .unwrap_or(usize::MAX);
 
-    if flavor_selection >= flavors.len() {
+    if flavor_selection >= FLAVORS.len() {
         flavor_selection = Select::new()
             .with_prompt("Select Discord flavor")
-            .items(&flavors)
+            .items(&FLAVORS)
             .interact()
             .unwrap();
+    } else {
+        println!("Flavor specified via argument");
     }
 
-    let flavor = flavors[flavor_selection];
+    let flavor = FLAVORS[flavor_selection];
+    println!("Using flavor: {:?}", flavor);
+
     let paths = resolve_discord_paths(flavor);
 
     let path = match paths.len() {
@@ -63,51 +83,17 @@ fn main() {
         .map(|index| args[index + 1].parse::<usize>().unwrap_or(0))
         .unwrap_or(usize::MAX);
 
-    if task_selection >= tasks.len() {
+    if task_selection >= TASKS.len() {
         task_selection = Select::new()
             .with_prompt("Select task")
-            .items(&tasks)
+            .items(&TASKS)
             .interact()
             .unwrap();
+    } else {
+        println!("Task specified via argument");
     }
 
-    let task = &tasks[task_selection];
-
+    let task = &TASKS[task_selection];
     println!("Running task: {}", task.name());
     task.run(path);
-
-    /*let flavor = DiscordFlavor::Canary;
-    println!("Flavor: {:?}", flavor);
-    println!("Searching for Discord installation...");
-
-    let paths = resolve_discord_paths(flavor);
-    match paths.len() {
-        0 => {
-            println!("No Discord installation found, exiting.");
-            std::process::exit(1);
-        }
-        1 => println!(
-            "Found Discord installation at {:?}",
-            paths[0].directory_path
-        ),
-        _ => println!(
-            "Found multiple Discord installations, using first one: {:?}",
-            paths
-        ),
-    }
-
-    let path = &paths[0].asar_path;
-    println!("Path to app.asar: {:?}", path);
-
-    println!()*/
 }
-
-/*fn run_npx_command(args: &[&str]) -> Result<(), Box<dyn std::error::Error>> {
-    let mut command = std::process::Command::new("npx");
-    command.args(args);
-    let status = command.status()?;
-    if !status.success() {
-        return Err("npx command failed".into());
-    }
-    Ok(())
-}*/

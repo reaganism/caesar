@@ -1,0 +1,25 @@
+#!/bin/sh
+
+if [ "$#" -ne 2 ]; then
+  echo "Usage: ./run <task> <branch>"
+  exit 1
+fi
+
+task=$1
+branch=$2
+
+# if [ "$task" != "dev" ] && [ "$task" != "package" ] && [ "$task" != "start" ]; then
+#   echo "Invalid task: $task"
+#   exit 1
+# fi
+# 
+# if [ "$branch" != "canary" ] && [ "$branch" != "dev" ] && [ "$branch" != "ptb" ] && [ "$branch" != "stable" ]; then
+#   echo "Invalid branch: $branch"
+#   exit 1
+# fi
+
+if [ "$task" == "dev" ]; then
+  npm run dev:discord:$branch
+else
+  npm run $task:caesar:$branch
+fi
