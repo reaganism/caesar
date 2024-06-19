@@ -22,10 +22,10 @@ skillz
 
 ...and also:
 
-- [GooseMod/OpenAsar](https://github.com/GooseMod/OpenAsar),
-- [steviegt6/nucleus](https://github.com/steviegt6/nucleus),
-- [OpenAsar/discord-desktop-datamining](https://github.com/OpenAsar/discord-desktop-datamining),
-- and more.
+-   [GooseMod/OpenAsar](https://github.com/GooseMod/OpenAsar),
+-   [steviegt6/nucleus](https://github.com/steviegt6/nucleus),
+-   [OpenAsar/discord-desktop-datamining](https://github.com/OpenAsar/discord-desktop-datamining),
+-   and more.
 
 ## Installation
 
@@ -52,6 +52,8 @@ You can build releases with `npm run package:caesar:<your discord flavor>`. Deve
 ## Licensing
 
 Caesar is currently licensed under the GNU Affero General Public License, version 3.
+
+See [COPYING.md](.github/COPYING.md) for more information.
 
 [^1]: Not all core modules will be reimplemented. Effort is required to reverse-engineer native modules.
 [^2]: The most notable example of this is [GooseMod/OpenAsar](https://github.com/GooseMod/OpenAsar).

@@ -1,6 +1,6 @@
 /* eslint-disable no-console -- handles logging */
 
-import { Timer } from './timer';
+import { Timer } from "./timer";
 
 /**
  * Logs passed arguments (the message) under a given category.
@@ -8,7 +8,7 @@ import { Timer } from './timer';
  * @param args - The arguments to log.
  */
 export function log(category: string, ...args: unknown[]): void {
-  console.log(getMessageStart(category, new Error().stack), ...args);
+    console.log(getMessageStart(category, new Error().stack), ...args);
 }
 
 /**
@@ -16,7 +16,7 @@ export function log(category: string, ...args: unknown[]): void {
  * @param timer - The timer type to start.
  */
 export function timerStart(timer: Timer | string): void {
-  console.time(getMessageStart(fullTimerName(timer), new Error().stack));
+    console.time(getMessageStart(fullTimerName(timer), new Error().stack));
 }
 
 /**
@@ -24,39 +24,39 @@ export function timerStart(timer: Timer | string): void {
  * @param timer - The timer type to end.
  */
 export function timerEnd(timer: Timer | string): void {
-  console.timeEnd(getMessageStart(fullTimerName(timer), new Error().stack));
+    console.timeEnd(getMessageStart(fullTimerName(timer), new Error().stack));
 }
 
 function fullTimerName(timer: Timer | string): string {
-  return `timer > ${timerName(timer)}`;
+    return `timer > ${timerName(timer)}`;
 }
 
 function timerName(timer: Timer | string): string {
-  if (typeof timer === 'string') {
-    return timer;
-  }
+    if (typeof timer === "string") {
+        return timer;
+    }
 
-  switch (timer) {
-    case Timer.Initialization:
-      return 'Initialization';
-  }
+    switch (timer) {
+        case Timer.Initialization:
+            return "Initialization";
+    }
 }
 
 function getMessageStart(category: string, stack: string | undefined): string {
-  let fullCat = category;
-  if (category !== '') {
-    fullCat = ` > ${category}`;
-  }
+    let fullCat = category;
+    if (category !== "") {
+        fullCat = ` > ${category}`;
+    }
 
-  const fullMessage = `[\x1b[38;2;88;101;242mcaesar\x1b[0m${fullCat}]`;
-  if (!stack) {
+    const fullMessage = `[\x1b[38;2;88;101;242mcaesar\x1b[0m${fullCat}]`;
+    if (!stack) {
+        return fullMessage;
+    }
+
+    // TODO: Refine logging and process stack later.
     return fullMessage;
-  }
 
-  // TODO: Refine logging and process stack later.
-  return fullMessage;
-
-  /*const caller = processStack(stack);
+    /*const caller = processStack(stack);
   if (!caller) {
     return fullMessage;
   }

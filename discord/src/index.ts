@@ -17,15 +17,15 @@
  * Entrypoint of the bootstrapper, handles initialization.
  */
 
-import { log, timerStart, timerEnd } from './util/logging';
-import { Timer } from './util/logging/timer';
-import { getBuildInfo, initBuildInfo } from './util/build-info';
-import { initializePaths } from './util/paths';
+import { log, timerStart, timerEnd } from "./util/logging";
+import { Timer } from "./util/logging/timer";
+import { getBuildInfo, initBuildInfo } from "./util/build-info";
+import { initializePaths } from "./util/paths";
 
 timerStart(Timer.Initialization);
 {
     initBuildInfo();
-    log('init', 'Got buildInfo:', getBuildInfo());
+    log("init", "Got buildInfo:", getBuildInfo());
 
     initializePaths(getBuildInfo());
 }

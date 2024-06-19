@@ -13,7 +13,6 @@
     },
     "license": "AGPL-3.0",
     "author": "tomat",
-    "type": "module",
     "scripts": {
         "dev:discord:canary": "cd caesar-build && cargo run -- --flavor 2 --task 0",
         "dev:discord:dev": "cd caesar-build && cargo run -- --flavor 3 --task 0",
@@ -29,13 +28,12 @@
         "start:caesar:stable": "npm run dev:discord:stable && cd caesar && npm run start"
     },
     "devDependencies": {
+        "@biomejs/biome": "1.7.0",
         "@electron/asar": "^3.2.7",
-        "@stylistic/eslint-plugin": "^1.7.2",
         "@types/node": "^20.8.4",
-        "@vercel/style-guide": "^6.0.0",
         "electron": "^22.3.12",
-        "eslint": "^8.51.0",
-        "prettier-eslint": "^15.0.1",
-        "typescript": "^5.2.2"
+        "eslint": "^8.57.0",
+        "typescript": "^5.2.2",
+        "typescript-eslint": "^7.7.0"
     }
 }
