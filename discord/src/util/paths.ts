@@ -46,7 +46,7 @@ export function removeOldInstallations(buildInfo: CaesarBuildInfo): void {
     log("paths", "Removing old installations");
 
     const entries = readdirSync(userDataPath);
-    entries.forEach((entry) => {
+    for (const entry of entries) {
         if (!userDataPath) {
             return;
         }
@@ -74,7 +74,7 @@ export function removeOldInstallations(buildInfo: CaesarBuildInfo): void {
             log("paths", "Failed to remove old installation", fullPath, e);
             return;
         }
-    });
+    }
 }
 
 export function getInstallPath(): string | undefined {
