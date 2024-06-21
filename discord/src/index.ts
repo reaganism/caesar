@@ -21,12 +21,20 @@ import { log, timerStart, timerEnd } from "./util/logging";
 import { Timer } from "./util/logging/timer";
 import { getBuildInfo, initBuildInfo } from "./util/build-info";
 import { initializePaths } from "./util/paths";
+import { getAppMode } from "./launch/app-mode";
+import { installGlobalPathFix } from "./util/global-paths";
 
 timerStart(Timer.Initialization);
 {
+    installGlobalPathFix();
+
     initBuildInfo();
     log("init", "Got buildInfo:", getBuildInfo());
 
     initializePaths(getBuildInfo());
+
+    const mode = getAppMode();
+    log("init", `Running in app mode: '${mode.name}'`);
+    mode.execute();
 }
 timerEnd(Timer.Initialization);
