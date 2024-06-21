@@ -13,6 +13,7 @@ interface BuildInfo {
     releaseChannel: string;
     version: string;
     localModulesRoot?: string;
+    debug?: boolean;
 }
 
 /**
@@ -44,6 +45,7 @@ export function initBuildInfo(): void {
             newUpdater: true,
             releaseChannel: "canary",
             version: BUILD_VERSION,
+            debug: false,
             caesarStandalone: true,
         };
     } else {

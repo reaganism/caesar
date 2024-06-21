@@ -3,9 +3,12 @@ import type { CaesarBuildInfo } from "../util/build-info";
 import { log } from "../util/logging";
 import { addGlobalPath } from "../util/global-paths";
 import { join } from "node:path";
-import { getVersionedUserDataPath } from "../util/paths";
-
-//#region Module updater listening
+import {
+    getResourcesPath,
+    getUserDataPath,
+    getVersionedUserDataPath,
+} from "../util/paths";
+import { mkdirSync, readFileSync } from "node:fs";
 
 /**
  * Listens for and responds to changes in the module updater's status.
@@ -24,20 +27,135 @@ export interface IModuleUpdateListener {
     onCheckingForUpdates?(): void;
 }
 
-const listeners: IModuleUpdateListener[] = [];
+export class ModuleUpdater {
+    endpoint: string;
+    releaseChannel: string;
+    version: string;
+    buildInfo: CaesarBuildInfo;
 
-export function addListener(listener: IModuleUpdateListener): void {
-    listeners.push(listener);
-}
+    bootstrapping: boolean;
+    hostUpdateAvailable: boolean;
+    checkingForUpdates: boolean;
 
-export function removeListener(listener: IModuleUpdateListener): void {
-    const index = listeners.indexOf(listener);
-    if (index !== -1) {
-        listeners.splice(index, 1);
+    skipHostUpdate: boolean;
+    skipModuleUpdate: boolean;
+
+    localModuleVersionsFilePath: string;
+    bootstrapManifestFilePath: string;
+
+    installedModulesFilePath: string | undefined;
+    moduleDownloadPath: string | undefined;
+
+    installedModules: unknown[] = [];
+
+    listeners: IModuleUpdateListener[] = [];
+
+    constructor(
+        endpoint: string,
+        releaseChannel: string,
+        version: string,
+        buildInfo: CaesarBuildInfo,
+    ) {
+        this.endpoint = endpoint;
+        this.releaseChannel = releaseChannel;
+        this.version = version;
+        this.buildInfo = buildInfo;
+
+        this.bootstrapping = false;
+        this.hostUpdateAvailable = false;
+        this.checkingForUpdates = false;
+
+        this.skipHostUpdate = false; // TODO: settings.get(SKIP_HOST_UPDATE)
+        this.skipModuleUpdate = false; // TODO: settings.get(SKIP_MODULE_UPDATE)
+
+        const userDataPath = getUserDataPath();
+        if (!userDataPath) {
+            // unreachable
+            throw new Error(
+                "Cannot initialize module updater without a user data path",
+            );
+        }
+        this.localModuleVersionsFilePath = join(
+            userDataPath,
+            "local_module_versions.json",
+        );
+
+        const resourcesPath = getResourcesPath();
+        if (!resourcesPath) {
+            // unreachable
+            throw new Error(
+                "Cannot initialize module updater without a resources path",
+            );
+        }
+        this.bootstrapManifestFilePath = join(resourcesPath, "manifest.json");
+    }
+
+    initialize() {
+        log("module-updater", "Initializing modules...");
+        log(
+            "module-updater",
+            `Distribution: ${locallyInstalledModules ? "local" : "remote"}`,
+        );
+        log(
+            "module-updater",
+            `Host updates: ${this.skipHostUpdate ? "disabled" : "enabled"}`,
+        );
+        log(
+            "module-updater",
+            `Module updates: ${this.skipModuleUpdate ? "disabled" : "enabled"}`,
+        );
+
+        if (!locallyInstalledModules) {
+            if (moduleInstallPath === undefined) {
+                // unreachable
+                throw new Error(
+                    "Cannot initialize module updater without a module install path",
+                );
+            }
+
+            this.installedModulesFilePath = join(
+                moduleInstallPath,
+                "installed.json",
+            );
+            this.moduleDownloadPath = join(moduleInstallPath, "pending");
+
+            mkdirSync(this.moduleDownloadPath, { recursive: true });
+
+            log("module-updater", `Module install path: ${moduleInstallPath}`);
+            log(
+                "module-updater",
+                `Module installed file path: ${this.installedModulesFilePath}`,
+            );
+            log(
+                "module-updater",
+                `Module download path: ${this.moduleDownloadPath}`,
+            );
+
+            let failed = false;
+            try {
+                this.installedModules = JSON.parse(
+                    readFileSync(this.installedModulesFilePath, "utf-8"),
+                );
+            } catch (err) {
+                failed = true;
+            }
+
+            this.bootstrapping =
+                failed; /* || settings.get(ALWAYS_BOOTSTRAP_MODULES); */ // TODO
+        }
+    }
+
+    addListener(listener: IModuleUpdateListener): void {
+        this.listeners.push(listener);
+    }
+
+    removeListener(listener: IModuleUpdateListener): void {
+        const index = this.listeners.indexOf(listener);
+        if (index !== -1) {
+            this.listeners.splice(index, 1);
+        }
     }
 }
-
-//#endregion
 
 let locallyInstalledModules: boolean;
 let moduleInstallPath: string | undefined = undefined;
@@ -46,10 +164,7 @@ function initialized(): boolean {
     return locallyInstalledModules || moduleInstallPath !== undefined;
 }
 
-export function initialize(
-    buildInfo: CaesarBuildInfo,
-    pathsOnly: boolean,
-): void {
+export function initializeModuleUpdaterPaths(buildInfo: CaesarBuildInfo): void {
     if (initialized()) {
         log(
             "module-updater",
@@ -57,10 +172,9 @@ export function initialize(
         );
     }
 
-    const logExtra = pathsOnly ? " (paths only) " : " ";
     log(
         "module-updater",
-        `Initializing module updater${logExtra}with build info:`,
+        "Initializing module updater paths with build info:",
         buildInfo,
     );
 
@@ -79,10 +193,22 @@ export function initialize(
         moduleInstallPath = join(versionedUserDataPath, "modules");
         addGlobalPath(moduleInstallPath);
     }
+}
 
-    if (pathsOnly) {
-        return;
-    }
+export function createModuleUpdater(
+    endpoint: string,
+    releaseChannel: string,
+    version: string,
+    buildInfo: CaesarBuildInfo,
+): ModuleUpdater {
+    const updater = new ModuleUpdater(
+        endpoint,
+        releaseChannel,
+        version,
+        buildInfo,
+    );
+
+    return updater;
 }
 
 export function checkForUpdates(): void {}
