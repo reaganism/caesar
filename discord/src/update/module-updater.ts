@@ -10,6 +10,7 @@ import {
 } from "../util/paths";
 import { mkdirSync, readFileSync } from "node:fs";
 import { getSettings } from "../config/app-settings";
+import { assertNotNull } from "../util/validation";
 
 /**
  * Listens for and responds to changes in the module updater's status.
@@ -70,25 +71,13 @@ export class ModuleUpdater {
         this.skipHostUpdate = settings.get<boolean>("SKIP_HOST_UPDATE");
         this.skipModuleUpdate = settings.get<boolean>("SKIP_MODULE_UPDATE");
 
-        const userDataPath = getUserDataPath();
-        if (!userDataPath) {
-            // unreachable
-            throw new Error(
-                "Cannot initialize module updater without a user data path",
-            );
-        }
+        const userDataPath = assertNotNull(getUserDataPath());
         this.localModuleVersionsFilePath = join(
             userDataPath,
             "local_module_versions.json",
         );
 
-        const resourcesPath = getResourcesPath();
-        if (!resourcesPath) {
-            // unreachable
-            throw new Error(
-                "Cannot initialize module updater without a resources path",
-            );
-        }
+        const resourcesPath = assertNotNull(getResourcesPath());
         this.bootstrapManifestFilePath = join(resourcesPath, "manifest.json");
     }
 
@@ -108,12 +97,7 @@ export class ModuleUpdater {
         );
 
         if (!locallyInstalledModules) {
-            if (moduleInstallPath === undefined) {
-                // unreachable
-                throw new Error(
-                    "Cannot initialize module updater without a module install path",
-                );
-            }
+            moduleInstallPath = assertNotNull(moduleInstallPath);
 
             this.installedModulesFilePath = join(
                 moduleInstallPath,
@@ -185,14 +169,7 @@ export function initializeModuleUpdaterPaths(buildInfo: CaesarBuildInfo): void {
         locallyInstalledModules = true;
         addGlobalPath(buildInfo.localModulesRoot);
     } else {
-        const versionedUserDataPath = getVersionedUserDataPath();
-        if (versionedUserDataPath === undefined) {
-            // unreachable
-            throw new Error(
-                "Cannot initialize module updater without a versioned user data path",
-            );
-        }
-
+        const versionedUserDataPath = assertNotNull(getVersionedUserDataPath());
         moduleInstallPath = join(versionedUserDataPath, "modules");
         addGlobalPath(moduleInstallPath);
     }

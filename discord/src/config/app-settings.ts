@@ -2,6 +2,7 @@ import { readFileSync, statSync, writeFileSync } from "node:fs";
 import { log } from "../util/logging";
 import { join } from "node:path";
 import { getUserDataPath } from "../util/paths";
+import { assertNotNull } from "../util/validation";
 
 /**
  * Provides application settings based on the original Discord desktop
@@ -68,12 +69,7 @@ export class Settings {
 let settings: Settings | undefined;
 
 export function getSettings() {
-    const userDataPath = getUserDataPath();
-    if (userDataPath === undefined) {
-        // unreachable
-        throw new Error("User data path is undefined");
-    }
-
+    const userDataPath = assertNotNull(getUserDataPath());
     settings = settings ?? new Settings(join(userDataPath, "settings.json"));
     return settings;
 }

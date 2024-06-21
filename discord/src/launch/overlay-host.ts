@@ -1,4 +1,4 @@
-import { initializeModuleUpdaterPaths } from "../updating/module-updater";
+import { initializeModuleUpdaterPaths } from "../update/module-updater";
 import { getBuildInfo } from "../util/build-info";
 import type { IAppMode } from "./app-mode";
 
