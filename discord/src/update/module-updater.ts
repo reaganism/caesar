@@ -9,6 +9,7 @@ import {
     getVersionedUserDataPath,
 } from "../util/paths";
 import { mkdirSync, readFileSync } from "node:fs";
+import { getSettings } from "../config/app-settings";
 
 /**
  * Listens for and responds to changes in the module updater's status.
@@ -65,8 +66,9 @@ export class ModuleUpdater {
         this.hostUpdateAvailable = false;
         this.checkingForUpdates = false;
 
-        this.skipHostUpdate = false; // TODO: settings.get(SKIP_HOST_UPDATE)
-        this.skipModuleUpdate = false; // TODO: settings.get(SKIP_MODULE_UPDATE)
+        const settings = getSettings();
+        this.skipHostUpdate = settings.get<boolean>("SKIP_HOST_UPDATE");
+        this.skipModuleUpdate = settings.get<boolean>("SKIP_MODULE_UPDATE");
 
         const userDataPath = getUserDataPath();
         if (!userDataPath) {

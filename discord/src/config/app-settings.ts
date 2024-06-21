@@ -25,7 +25,23 @@ export class Settings {
         this.lastModified = this.getLastModifiedTime();
     }
 
-    public save(): void {
+    get<T>(key: string): T {
+        return this.store[key] as T;
+    }
+
+    set<T>(key: string, value: T): void {
+        this.store[key] = value;
+    }
+
+    getLastModifiedTime() {
+        try {
+            return statSync(this.path).mtimeMs;
+        } catch {
+            return this.lastModified;
+        }
+    }
+
+    save(): void {
         // We can't save the file if it's been modified externally.
         if (
             this.lastModified !== 0 &&
@@ -45,14 +61,6 @@ export class Settings {
             log("app-settings", "Settings saved successfully.");
         } catch (err) {
             log("app-settings", `Failed to save settings: ${err}`);
-        }
-    }
-
-    getLastModifiedTime() {
-        try {
-            return statSync(this.path).mtimeMs;
-        } catch {
-            return this.lastModified;
         }
     }
 }
