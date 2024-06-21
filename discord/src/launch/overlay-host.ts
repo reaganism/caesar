@@ -17,6 +17,9 @@ import { initializeModuleUpdaterPaths } from "../update/module-updater";
 import { getBuildInfo } from "../util/build-info";
 import type { IAppMode } from "./app-mode";
 
+/**
+ * The overlay host application mode.
+ */
 export class OverlayHostAppMode implements IAppMode {
     name = "overlay-host";
 

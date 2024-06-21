@@ -41,15 +41,25 @@ export class Settings {
         this.lastModified = this.getLastModifiedTime();
     }
 
+    /**
+     * Gets a setting from the store.
+     * @param key The key.
+     * @returns The value.
+     */
     get<T>(key: string): T {
         return this.store[key] as T;
     }
 
+    /**
+     * Sets a setting in the store.
+     * @param key The key.
+     * @param value The value
+     */
     set<T>(key: string, value: T): void {
         this.store[key] = value;
     }
 
-    getLastModifiedTime() {
+    private getLastModifiedTime() {
         try {
             return statSync(this.path).mtimeMs;
         } catch {
@@ -57,6 +67,10 @@ export class Settings {
         }
     }
 
+    // TODO: Use this somewhere?
+    /**
+     * Saves the settings to disk.
+     */
     save(): void {
         // We can't save the file if it's been modified externally.
         if (
