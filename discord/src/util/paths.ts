@@ -1,3 +1,18 @@
+/* Copyright (C) 2024  Tomat et al.
+ *
+ * This program is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU Affero General Public License as published by the
+ * Free Software Foundation, either version 3 of the License, or (at your
+ * option) any later versions.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses>.
+ */
+
 import { basename, dirname, join } from "node:path";
 import { lstatSync, mkdirSync, readdirSync, rmdirSync } from "node:fs";
 import { app } from "electron";
@@ -10,6 +25,10 @@ let versionedUserDataPath: string | undefined;
 let moduleDataPath: string | undefined;
 let installPath: string | undefined;
 
+/**
+ * Initializes paths.
+ * @param buildInfo The build info to initialize within the context of.
+ */
 export function initializePaths(buildInfo: CaesarBuildInfo): void {
     if (!require.main)
         throw new Error("Cannot initialize paths without a main module");
@@ -37,6 +56,10 @@ export function initializePaths(buildInfo: CaesarBuildInfo): void {
     log("paths", "installPath:", installPath);
 }
 
+/**
+ * Removes old (outdated) Discord installations.
+ * @param buildInfo The build info.
+ */
 export function removeOldInstallations(buildInfo: CaesarBuildInfo): void {
     if (!userDataPath) {
         log("paths", "userDataPath not set, cannot remove old installations");
@@ -77,22 +100,37 @@ export function removeOldInstallations(buildInfo: CaesarBuildInfo): void {
     }
 }
 
+/**
+ * @returns The path to which Discord is installed.
+ */
 export function getInstallPath(): string | undefined {
     return installPath;
 }
 
+/**
+ * @returns The path to which module data is saved.
+ */
 export function getModuleDataPath(): string | undefined {
     return moduleDataPath;
 }
 
+/**
+ * @returns The Electron `resources` directory.
+ */
 export function getResourcesPath(): string | undefined {
     return resourcesPath;
 }
 
+/**
+ * @returns The user data `discord{releaseChannel}` directory.
+ */
 export function getUserDataPath(): string | undefined {
     return userDataPath;
 }
 
+/**
+ * @returns The versioned sub-directory beneath the user data directory.
+ */
 export function getVersionedUserDataPath(): string | undefined {
     return versionedUserDataPath;
 }
