@@ -140,6 +140,7 @@ export class ModuleUpdater {
                 failed = true;
             }
 
+            cleanDownloadedModules(this.installedModules);
             this.bootstrapping =
                 failed; /* || settings.get(ALWAYS_BOOTSTRAP_MODULES); */ // TODO
         }
