@@ -24,6 +24,7 @@ let userDataPath: string | undefined;
 let versionedUserDataPath: string | undefined;
 let moduleDataPath: string | undefined;
 let installPath: string | undefined;
+let exeDir: string | undefined;
 
 /**
  * Initializes paths.
@@ -41,7 +42,7 @@ export function initializePaths(buildInfo: CaesarBuildInfo): void {
             ? join(userDataPath, "module_data")
             : join(versionedUserDataPath, "modules");
 
-    const exeDir = dirname(app.getPath("exe"));
+    exeDir = dirname(app.getPath("exe"));
     if (/^app-[0-9]+\.[0-9]+\.[0-9]+/.test(basename(exeDir))) {
         installPath = join(exeDir, "resources");
     }
@@ -54,6 +55,7 @@ export function initializePaths(buildInfo: CaesarBuildInfo): void {
     log("paths", "userDataVersionedPath:", versionedUserDataPath);
     log("paths", "moduleDataPath:", moduleDataPath);
     log("paths", "installPath:", installPath);
+    log("paths", "exeDir:", exeDir);
 }
 
 /**
@@ -133,6 +135,10 @@ export function getUserDataPath(): string | undefined {
  */
 export function getVersionedUserDataPath(): string | undefined {
     return versionedUserDataPath;
+}
+
+export function getExecutableDir(): string | undefined {
+    return exeDir;
 }
 
 function findAppDataDir(): string {

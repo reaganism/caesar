@@ -51,6 +51,16 @@ export class Settings {
     }
 
     /**
+     * Gets a setting from the store with a default value.
+     * @param key The key.
+     * @param defaultValue The default value.
+     * @returns The value.
+     */
+    getWithDefaultValue<T>(key: string, defaultValue: T): T {
+        return (this.store[key] as T) ?? defaultValue;
+    }
+
+    /**
      * Sets a setting in the store.
      * @param key The key.
      * @param value The value
