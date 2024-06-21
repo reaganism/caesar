@@ -16,7 +16,7 @@
 import { basename, dirname, join } from "node:path";
 import { lstatSync, mkdirSync, readdirSync, rmdirSync } from "node:fs";
 import { app } from "electron";
-import type { CaesarBuildInfo } from "./build-info";
+import { getBuildInfo, type CaesarBuildInfo } from "./build-info";
 import { log } from "./logging";
 
 let resourcesPath: string | undefined;
@@ -154,11 +154,12 @@ function findUserDataDir(
     userDataRoot: string,
     buildInfo: CaesarBuildInfo,
 ): string {
-    // TODO: Determine when to use caesar instead of discord?
+    const appName = getBuildInfo().caesarStandalone ? "caesar" : "discord";
     return join(
         userDataRoot,
-        `discord${buildInfo.releaseChannel}` === "stable"
-            ? ""
-            : buildInfo.releaseChannel,
+        appName +
+            (buildInfo.releaseChannel === "stable"
+                ? ""
+                : buildInfo.releaseChannel),
     );
 }
