@@ -16,7 +16,11 @@
 import { join } from "node:path";
 import { existsSync } from "node:fs";
 import { log } from "./logging";
-import { BUILD_VERSION } from "./constants";
+
+export const BUILD_MAJOR = 1;
+export const BUILD_MINOR = 0;
+export const BUILD_PATCH = 389;
+export const BUILD_VERSION = `${BUILD_MAJOR}.${BUILD_MINOR}.${BUILD_PATCH}`;
 
 //#region Types
 

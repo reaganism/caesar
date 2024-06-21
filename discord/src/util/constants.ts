@@ -13,7 +13,32 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses>.
  */
 
-export const BUILD_MAJOR = 1;
-export const BUILD_MINOR = 0;
-export const BUILD_PATCH = 389;
-export const BUILD_VERSION = `${BUILD_MAJOR}.${BUILD_MINOR}.${BUILD_PATCH}`;
+import { getSettings } from "../config/app-settings";
+import { getBuildInfo } from "./build-info";
+
+const buildInfo = getBuildInfo();
+const settings = getSettings();
+
+const productName = "Discord";
+const domain = "https://discord.com";
+
+const channel = buildInfo.releaseChannel;
+const channelSuffix =
+    channel === "stable" ? "" : channel[0].toUpperCase() + channel.slice(1);
+const nameWithChannel = productName + channelSuffix;
+
+export const APP_COMPANY = `${productName} Inc`;
+export const APP_DESCRIPTION = `${productName} - ${domain}`;
+export const APP_NAME = nameWithChannel;
+export const APP_NAME_FOR_HUMANS = `${productName} ${channelSuffix}`.trim();
+export const APP_ID = `com.squirrel.${nameWithChannel}.${nameWithChannel}`;
+export const APP_PROTOCOL = productName;
+export const API_ENDPOINT =
+    settings.get<string | undefined>("API_ENDPOINT") || `${domain}/api`;
+export const NEW_UPDATE_ENDPOINT =
+    settings.get<string | undefined>("NEW_UPDATE_ENDPOINT") ||
+    "https://updates.discord.com/";
+export const UPDATE_ENDPOINT =
+    settings.get<string | undefined>("UPDATE_ENDPOINT") || `${domain}/api`;
+export const DISABLE_WINDOWS_64BIT_TRANSITION = false;
+export const OPTIN_WINDOWS_64BIT_TRANSITION_PROGRESSION = false;
